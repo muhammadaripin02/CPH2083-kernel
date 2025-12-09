@@ -413,6 +413,8 @@ KBUILD_AFLAGS_MODULE  := -DMODULE
 KBUILD_CFLAGS_MODULE  := -DMODULE
 KBUILD_LDFLAGS_MODULE := -T $(srctree)/scripts/module-common.lds
 GCC_PLUGINS_CFLAGS :=
+export VENDOR_EDIT=yes
+export ODM_WT_EDIT=yes
 
 #ifdef VENDOR_EDIT
 #Haiping.Zhong@PSW.AD.BuildConfig.BaseConfig.0, 2019/01/08, Add for build root disable dm verity
@@ -503,14 +505,11 @@ KBUILD_CPPFLAGS += -DCONFIG_HIGH_TEMP_VERSION
 endif
 #endif /* VENDOR_EDIT */
 
-#ifdef  VENDOR_EDIT
 #LiPing-m@PSW.MM.Display.LCD.Machine, 2017/11/03, Add for VENDOR_EDIT macro in kernel
 KBUILD_CFLAGS +=   -DVENDOR_EDIT
 KBUILD_CPPFLAGS += -DVENDOR_EDIT
 CFLAGS_KERNEL +=   -DVENDOR_EDIT
 CFLAGS_MODULE +=   -DVENDOR_EDIT
-#endif /* VENDOR_EDIT */
-
 
 
 #ifdef VENDOR_EDIT
@@ -550,21 +549,11 @@ KBUILD_CPPFLAGS += -DOPPO_RELEASE_FLAG
 endif
 #endif /* VENDOR_EDIT */
 
-#ifdef ODM_HQ_EDIT
-#Qiuyu.Fan 2018/10/03,Add for ODM_HQ_EDIT maco in kernel
-KBUILD_CFLAGS   += -DODM_HQ_EDIT
-KBUILD_CPPFLAGS += -DODM_HQ_EDIT
-CFLAGS_KERNEL   += -DODM_HQ_EDIT
-CFLAGS_MODULE   += -DODM_HQ_EDIT
-export ODM_HQ_EDIT=yes
-#endif
-
 #Wuzhenzhen.Wu 2019/12/17,Add for ODM_WT_EDIT maco in kernel
 KBUILD_CFLAGS   += -DODM_WT_EDIT
 KBUILD_CPPFLAGS += -DODM_WT_EDIT
 CFLAGS_KERNEL   += -DODM_WT_EDIT
 CFLAGS_MODULE   += -DODM_WT_EDIT
-export ODM_WT_EDIT=yes
 
 # Read KERNELRELEASE from include/config/kernel.release (if it exists)
 KERNELRELEASE = $(shell cat include/config/kernel.release 2> /dev/null)
