@@ -415,6 +415,7 @@ KBUILD_LDFLAGS_MODULE := -T $(srctree)/scripts/module-common.lds
 GCC_PLUGINS_CFLAGS :=
 export VENDOR_EDIT=yes
 export ODM_WT_EDIT=yes
+export ODM_HQ_EDIT=yes
 
 #ifdef VENDOR_EDIT
 #Haiping.Zhong@PSW.AD.BuildConfig.BaseConfig.0, 2019/01/08, Add for build root disable dm verity
@@ -554,6 +555,12 @@ KBUILD_CFLAGS   += -DODM_WT_EDIT
 KBUILD_CPPFLAGS += -DODM_WT_EDIT
 CFLAGS_KERNEL   += -DODM_WT_EDIT
 CFLAGS_MODULE   += -DODM_WT_EDIT
+
+#Qiuyu.Fan 2018/10/03,Add for ODM_HQ_EDIT maco in kernel
+KBUILD_CFLAGS   += -DODM_HQ_EDIT
+KBUILD_CPPFLAGS += -DODM_HQ_EDIT
+CFLAGS_KERNEL   += -DODM_HQ_EDIT
+CFLAGS_MODULE   += -DODM_HQ_EDIT
 
 # Read KERNELRELEASE from include/config/kernel.release (if it exists)
 KERNELRELEASE = $(shell cat include/config/kernel.release 2> /dev/null)
