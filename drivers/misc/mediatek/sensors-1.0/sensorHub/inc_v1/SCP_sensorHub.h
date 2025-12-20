@@ -17,6 +17,7 @@
 #define SCP_SENSOR_HUB_H
 
 #include <linux/ioctl.h>
+#include <linux/atomic.h>
 
 #if defined(CONFIG_MTK_SCP_SENSORHUB_V1)
 #error CONFIG_MTK_SCP_SENSORHUB_V1 should not configed
@@ -53,6 +54,7 @@ struct SensorState {
 	bool enable;
 	bool timestamp_filter;
 	atomic_t flushCnt;
+	atomic64_t enableTime;
 };
 
 #define SCP_SENSOR_HUB_TEMP_BUFSIZE     256
@@ -416,8 +418,10 @@ typedef enum {
 	CUST_ACTION_SHOW_ALSVAL,
 	CUST_ACTION_SET_FACTORY,
 	CUST_ACTION_GET_SENSOR_INFO,
+#ifdef VENDOR_EDIT
 /* Weiqin.Tang@PSW.BSP.Sensor, 2020/1/2, add for set factory flag to scp */
     CUST_ACTION_SET_FACTORY_FLAG, /* 13 */
+#endif
 #ifdef VENDOR_EDIT
 //ye.zhang@PSE.BSP.Sensor, 2017-12-20, add for sensor self test
 	CUST_ACTION_SELFTEST,
@@ -440,11 +444,13 @@ typedef struct {
 	int trace;
 } SCP_SENSOR_HUB_SET_TRACE;
 
+#ifdef VENDOR_EDIT
 /* Weiqin.Tang@PSW.BSP.Sensor, 2020/1/2, add for set factory flag to scp */
 typedef struct {
 	CUST_ACTION    action;
 	int flag;
 } SCP_SENSOR_HUB_SET_FACTORY_FLAG;
+#endif
 
 typedef struct {
 	CUST_ACTION action;
@@ -542,8 +548,10 @@ typedef struct {
 		SCP_SENSOR_HUB_SET_CALI setCali;
 		SCP_SENSOR_HUB_RESET_CALI resetCali;
 		SCP_SENSOR_HUB_SET_TRACE setTrace;
-/* Weiqin.Tang@PSW.BSP.Sensor, 2020/1/2, add for set factory flag to scp */
+		#ifdef VENDOR_EDIT
+		/* Weiqin.Tang@PSW.BSP.Sensor, 2020/1/2, add for set factory flag to scp */
 		SCP_SENSOR_HUB_SET_FACTORY_FLAG setFactoryFlag;
+		#endif
 		SCP_SENSOR_HUB_SET_DIRECTION setDirection;
 		SCP_SENSOR_HUB_SHOW_REG showReg;
 		SCP_SENSOR_HUB_GET_RAW_DATA getRawData;
